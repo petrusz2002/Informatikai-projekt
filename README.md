@@ -1,0 +1,2 @@
+# Informatikai-projekt
+Informatikai projekt
