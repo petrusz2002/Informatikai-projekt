@@ -75,40 +75,37 @@ namespace ShoppingList
             int i = -1;
             try
             {
-                
+                DataGridViewRow myrow = null;
                 foreach (DataGridViewRow row in dtGrdVw.SelectedRows)
                 {
                     i = row.Index;
-                    dtGrdVw.Rows.RemoveAt(row.Index);
+                    //dtGrdVw.Rows.RemoveAt(row.Index);
                 }
                 if (i == -1)
                 {
                     MessageBox.Show("Please select the full row!", "Wrong usage!",
-                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else 
                 {
                     connection.Open();
+                    myrow = dtGrdVw.Rows[i];
                     MySqlDataAdapter adapter;
                     DataTable data = new DataTable();
-                   
-                    string sql = "SET @row_number := 0; SELECT (@row_number:= @row_number + 1) AS `row_number`,t.* FROM `main_table` t;";
-                    /*MySqlDataAdapter adapter = new MySqlDataAdapter("DELETE FROM main_table " +
-                        "WHERE main_table.Rows = '"+(i+1)+"';",connection);*/
-                   
-                   
-                    adapter = new MySqlDataAdapter(sql, connection);
+                    adapter = new MySqlDataAdapter("DELETE FROM main_table " +
+                        "WHERE List_Items = '"+myrow.Cells[0].Value+ "' AND List_Items_DB ='" + myrow.Cells[1].Value + "' AND " +
+                        "Shop_Items = '" + myrow.Cells[2].Value + "' AND Shop_Items_DB ='" + myrow.Cells[3].Value + "';", connection);
                     adapter.Fill(data);
-                    // adapter = new MySqlDataAdapter("ALTER TABLE maintable AUTO_INCREMENT="+(i+1)+";", connection);
-                    /* adapter = new MySqlDataAdapter("SELECT List_Items,List_Items_DB,Shop_Items" +
-                     ",Shop_Items_DB,Succeeded_buy,How_much FROM main_table;", connection);
-                     adapter.Fill(data);*/
+                    adapter = new MySqlDataAdapter("SELECT List_Items,List_Items_DB,Shop_Items" +
+                      ",Shop_Items_DB,Succeeded_buy,How_much FROM main_table;", connection);
+                      adapter.Fill(data);
                     dtGrdVw.DataSource = data;
+
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.StackTrace);
             }
             finally
             {
@@ -145,7 +142,7 @@ namespace ShoppingList
 
         private void bttn_Close_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
     }
 }
