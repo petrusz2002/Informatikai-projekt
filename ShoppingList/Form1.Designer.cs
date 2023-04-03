@@ -30,10 +30,8 @@ namespace ShoppingList
         private void InitializeComponent()
         {
             this.dtGrdVw = new System.Windows.Forms.DataGridView();
-            this.bttn_Save = new System.Windows.Forms.Button();
             this.bttn_Find = new System.Windows.Forms.Button();
             this.bttn_ShowCurrentData = new System.Windows.Forms.Button();
-            this.bttn_DeleteSelectedData = new System.Windows.Forms.Button();
             this.bttn_ImportFile = new System.Windows.Forms.Button();
             this.bttn_ExportData = new System.Windows.Forms.Button();
             this.bttn_ShowResult = new System.Windows.Forms.Button();
@@ -41,7 +39,6 @@ namespace ShoppingList
             this.bttn_DeleteRow = new System.Windows.Forms.Button();
             this.bttn_Close = new System.Windows.Forms.Button();
             this.txtBx_Search = new System.Windows.Forms.TextBox();
-            this.txtBx_AddItem = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtGrdVw)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,20 +49,11 @@ namespace ShoppingList
             this.dtGrdVw.Name = "dtGrdVw";
             this.dtGrdVw.Size = new System.Drawing.Size(1060, 387);
             this.dtGrdVw.TabIndex = 0;
-            // 
-            // bttn_Save
-            // 
-            this.bttn_Save.Location = new System.Drawing.Point(15, 421);
-            this.bttn_Save.Name = "bttn_Save";
-            this.bttn_Save.Size = new System.Drawing.Size(172, 86);
-            this.bttn_Save.TabIndex = 1;
-            this.bttn_Save.Text = "Save";
-            this.bttn_Save.UseVisualStyleBackColor = true;
-            this.bttn_Save.Click += new System.EventHandler(this.bttn_Save_Click);
+            this.dtGrdVw.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtGrdVw_CellValueChanged);
             // 
             // bttn_Find
             // 
-            this.bttn_Find.Location = new System.Drawing.Point(193, 421);
+            this.bttn_Find.Location = new System.Drawing.Point(549, 421);
             this.bttn_Find.Name = "bttn_Find";
             this.bttn_Find.Size = new System.Drawing.Size(172, 86);
             this.bttn_Find.TabIndex = 2;
@@ -75,7 +63,7 @@ namespace ShoppingList
             // 
             // bttn_ShowCurrentData
             // 
-            this.bttn_ShowCurrentData.Location = new System.Drawing.Point(371, 421);
+            this.bttn_ShowCurrentData.Location = new System.Drawing.Point(15, 421);
             this.bttn_ShowCurrentData.Name = "bttn_ShowCurrentData";
             this.bttn_ShowCurrentData.Size = new System.Drawing.Size(172, 86);
             this.bttn_ShowCurrentData.TabIndex = 3;
@@ -83,19 +71,9 @@ namespace ShoppingList
             this.bttn_ShowCurrentData.UseVisualStyleBackColor = true;
             this.bttn_ShowCurrentData.Click += new System.EventHandler(this.bttn_ShowCurrentData_Click);
             // 
-            // bttn_DeleteSelectedData
-            // 
-            this.bttn_DeleteSelectedData.Location = new System.Drawing.Point(549, 421);
-            this.bttn_DeleteSelectedData.Name = "bttn_DeleteSelectedData";
-            this.bttn_DeleteSelectedData.Size = new System.Drawing.Size(172, 86);
-            this.bttn_DeleteSelectedData.TabIndex = 4;
-            this.bttn_DeleteSelectedData.Text = "Delete Selected Data";
-            this.bttn_DeleteSelectedData.UseVisualStyleBackColor = true;
-            this.bttn_DeleteSelectedData.Click += new System.EventHandler(this.bttn_DeleteSelectedData_Click);
-            // 
             // bttn_ImportFile
             // 
-            this.bttn_ImportFile.Location = new System.Drawing.Point(727, 421);
+            this.bttn_ImportFile.Location = new System.Drawing.Point(193, 421);
             this.bttn_ImportFile.Name = "bttn_ImportFile";
             this.bttn_ImportFile.Size = new System.Drawing.Size(172, 86);
             this.bttn_ImportFile.TabIndex = 5;
@@ -105,7 +83,7 @@ namespace ShoppingList
             // 
             // bttn_ExportData
             // 
-            this.bttn_ExportData.Location = new System.Drawing.Point(15, 513);
+            this.bttn_ExportData.Location = new System.Drawing.Point(193, 513);
             this.bttn_ExportData.Name = "bttn_ExportData";
             this.bttn_ExportData.Size = new System.Drawing.Size(172, 86);
             this.bttn_ExportData.TabIndex = 6;
@@ -115,7 +93,7 @@ namespace ShoppingList
             // 
             // bttn_ShowResult
             // 
-            this.bttn_ShowResult.Location = new System.Drawing.Point(193, 513);
+            this.bttn_ShowResult.Location = new System.Drawing.Point(15, 513);
             this.bttn_ShowResult.Name = "bttn_ShowResult";
             this.bttn_ShowResult.Size = new System.Drawing.Size(172, 86);
             this.bttn_ShowResult.TabIndex = 7;
@@ -125,7 +103,7 @@ namespace ShoppingList
             // 
             // bttn_AddRow
             // 
-            this.bttn_AddRow.Location = new System.Drawing.Point(371, 513);
+            this.bttn_AddRow.Location = new System.Drawing.Point(371, 421);
             this.bttn_AddRow.Name = "bttn_AddRow";
             this.bttn_AddRow.Size = new System.Drawing.Size(172, 86);
             this.bttn_AddRow.TabIndex = 8;
@@ -135,7 +113,7 @@ namespace ShoppingList
             // 
             // bttn_DeleteRow
             // 
-            this.bttn_DeleteRow.Location = new System.Drawing.Point(549, 513);
+            this.bttn_DeleteRow.Location = new System.Drawing.Point(371, 513);
             this.bttn_DeleteRow.Name = "bttn_DeleteRow";
             this.bttn_DeleteRow.Size = new System.Drawing.Size(172, 86);
             this.bttn_DeleteRow.TabIndex = 9;
@@ -145,7 +123,7 @@ namespace ShoppingList
             // 
             // bttn_Close
             // 
-            this.bttn_Close.Location = new System.Drawing.Point(727, 513);
+            this.bttn_Close.Location = new System.Drawing.Point(549, 513);
             this.bttn_Close.Name = "bttn_Close";
             this.bttn_Close.Size = new System.Drawing.Size(172, 86);
             this.bttn_Close.TabIndex = 10;
@@ -161,20 +139,11 @@ namespace ShoppingList
             this.txtBx_Search.TabIndex = 11;
             this.txtBx_Search.Text = "Search";
             // 
-            // txtBx_AddItem
-            // 
-            this.txtBx_AddItem.Location = new System.Drawing.Point(15, 694);
-            this.txtBx_AddItem.Name = "txtBx_AddItem";
-            this.txtBx_AddItem.Size = new System.Drawing.Size(272, 20);
-            this.txtBx_AddItem.TabIndex = 12;
-            this.txtBx_AddItem.Text = "Type Here";
-            // 
             // ShoppingListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 851);
-            this.Controls.Add(this.txtBx_AddItem);
             this.Controls.Add(this.txtBx_Search);
             this.Controls.Add(this.bttn_Close);
             this.Controls.Add(this.bttn_DeleteRow);
@@ -182,10 +151,8 @@ namespace ShoppingList
             this.Controls.Add(this.bttn_ShowResult);
             this.Controls.Add(this.bttn_ExportData);
             this.Controls.Add(this.bttn_ImportFile);
-            this.Controls.Add(this.bttn_DeleteSelectedData);
             this.Controls.Add(this.bttn_ShowCurrentData);
             this.Controls.Add(this.bttn_Find);
-            this.Controls.Add(this.bttn_Save);
             this.Controls.Add(this.dtGrdVw);
             this.Name = "ShoppingListForm";
             this.Text = "Shopping List ";
@@ -198,10 +165,8 @@ namespace ShoppingList
         #endregion
 
         private System.Windows.Forms.DataGridView dtGrdVw;
-        private System.Windows.Forms.Button bttn_Save;
         private System.Windows.Forms.Button bttn_Find;
         private System.Windows.Forms.Button bttn_ShowCurrentData;
-        private System.Windows.Forms.Button bttn_DeleteSelectedData;
         private System.Windows.Forms.Button bttn_ImportFile;
         private System.Windows.Forms.Button bttn_ExportData;
         private System.Windows.Forms.Button bttn_ShowResult;
@@ -209,7 +174,6 @@ namespace ShoppingList
         private System.Windows.Forms.Button bttn_DeleteRow;
         private System.Windows.Forms.Button bttn_Close;
         private System.Windows.Forms.TextBox txtBx_Search;
-        private System.Windows.Forms.TextBox txtBx_AddItem;
     }
 }
 
