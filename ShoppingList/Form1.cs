@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -54,6 +55,8 @@ namespace ShoppingList
                     ",Shop_Items_DB,Succeeded_buy,How_much FROM main_table;", connection);
                 adapter.Fill(data);
                 dtGrdVw.DataSource = data;
+                dtGrdVw.Columns[4].ReadOnly = true;
+                dtGrdVw.Columns[5].ReadOnly = true;
             }
             catch (Exception ex)
             {
@@ -114,6 +117,7 @@ namespace ShoppingList
 
         private void dtGrdVw_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            data = new DataTable();
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 DataGridViewCell cell = dtGrdVw.Rows[e.RowIndex].Cells[e.ColumnIndex];
@@ -150,7 +154,64 @@ namespace ShoppingList
 
         private void bttn_ShowResult_Click(object sender, EventArgs e)
         {
-
+            int i = 0;
+            List<string> l5 = new List<string>();
+            List<string> l6 = new List<string>();
+            using (MySqlConnection connection = new MySqlConnection(constring))
+            {
+                connection.Open();
+                using (MySqlCommand command = new MySqlCommand("SELECT List_Items,List_Items_DB,Shop_Items" +
+                    ",Shop_Items_DB,Succeeded_buy,How_much FROM main_table", connection))
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string column1Value = (string)reader["List_Items"];
+                        string column2Value = (string)reader["List_Items_DB"];
+                        string column3Value = (string)reader["Shop_Items"];
+                        string column4Value = (string)reader["Shop_Items_DB"];
+                        string column5Value = "";
+                        string column6Value = "";
+                        
+                        if (column1Value.Equals(column3Value) && int.Parse(column2Value) <= int.Parse(column4Value))
+                        {
+                            column5Value = "YES";
+                            column6Value = (string)reader["Shop_Items_DB"];
+                        }
+                        else if (column1Value.Equals(column3Value) && int.Parse(column2Value) > int.Parse(column4Value))
+                        {
+                            column5Value = "NO";
+                            column6Value = (string)reader["Shop_Items_DB"];
+                        }
+                        l5.Add(column5Value);
+                        l6.Add(column6Value);
+                        ++i;
+                    }
+                    reader.Close();
+                    data = new DataTable();
+                    adapter = new MySqlDataAdapter("SELECT * FROM main_table;", connection);
+                    adapter.Fill(data);
+                    dtGrdVw.DataSource = data;
+                    dtGrdVw.Columns[5].ReadOnly = true;
+                    dtGrdVw.Columns[6].ReadOnly = true;
+                    for (int j = 0; j < i; j++)
+                    {
+                        MySqlCommand updateCommand = new MySqlCommand("UPDATE main_table SET " +
+                                                "Succeeded_buy = @value1, How_much = @value2 WHERE " +
+                                                " main_table.Rows = " + dtGrdVw.Rows[j].Cells[0].Value + ";", connection);
+                        updateCommand.Parameters.AddWithValue("@value1", l5[j]);
+                        updateCommand.Parameters.AddWithValue("@value2", l6[j]);
+                        updateCommand.ExecuteNonQuery();
+                    }
+                    
+                }
+            }
+            data = new DataTable();
+            adapter = new MySqlDataAdapter("SELECT List_Items,List_Items_DB,Shop_Items" +
+                    ",Shop_Items_DB,Succeeded_buy,How_much FROM main_table;", connection);
+            adapter.Fill(data);
+            dtGrdVw.DataSource = data;
+            connection.Close();
         }
 
         private void bttn_ImportFile_Click(object sender, EventArgs e)
