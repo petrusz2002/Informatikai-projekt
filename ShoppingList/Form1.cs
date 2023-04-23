@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace ShoppingList
 {
@@ -280,6 +281,57 @@ namespace ShoppingList
                     MessageBox.Show("Error: " + ex.Message);
                 }
             }
+        }
+
+        private void bttn_ImportFile_MouseHover(object sender, EventArgs e)
+        {
+            bttn_ImportFile.BackColor = Color.DarkGray;
+
+        }
+
+        private void bttn_ExportData_MouseHover(object sender, EventArgs e)
+        {
+            bttn_ExportData.BackColor = Color.DarkGray;
+        }
+
+        private void bttn_ImportFile_MouseLeave(object sender, EventArgs e)
+        {
+            bttn_ImportFile.BackColor = Color.White;
+        }
+
+        private void bttn_ExportData_MouseLeave(object sender, EventArgs e)
+        {
+            bttn_ExportData.BackColor = Color.White;
+        }
+
+        private void bttn_DeleteRow_MouseHover(object sender, EventArgs e)
+        {
+            bttn_DeleteRow.BackColor = Color.DarkSalmon;
+        }
+
+        private void bttn_DeleteRow_MouseLeave(object sender, EventArgs e)
+        {
+            bttn_DeleteRow.BackColor = Color.White;
+        }
+
+        private void bttn_AddRow_MouseHover(object sender, EventArgs e)
+        {
+            bttn_AddRow.BackColor = Color.PaleGreen;
+        }
+
+        private void bttn_AddRow_MouseLeave(object sender, EventArgs e)
+        {
+            bttn_AddRow.BackColor = Color.White;
+        }
+
+        private void bttn_ShowResult_MouseHover(object sender, EventArgs e)
+        {
+            bttn_ShowResult.BackColor = Color.FromArgb(255,255,255,192);
+        }
+
+        private void bttn_ShowResult_MouseLeave(object sender, EventArgs e)
+        {
+            bttn_ShowResult.BackColor = Color.White;
         }
     }
 }
