@@ -1,10 +1,8 @@
 ﻿
-using Microsoft.VisualBasic.FileIO;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -195,7 +193,7 @@ namespace ShoppingList
                     dtGrdVw.DataSource = data;
                     dtGrdVw.Columns[5].ReadOnly = true;
                     dtGrdVw.Columns[6].ReadOnly = true;
-                    for (int j = 0; j < i; j++)
+                    for (int j = 0; j < i; ++j)
                     {
                         MySqlCommand updateCommand = new MySqlCommand("UPDATE main_table SET " +
                                                 "Succeeded_buy = @value1, How_much = @value2 WHERE " +
